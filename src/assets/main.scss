@@ -1,0 +1,58 @@
+@import "variables";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Rubik", sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+input,
+button {
+  outline: none;
+}
+
+.animal-info-title {
+  color: #fff;
+  font-family: Nunito, sans-serif;
+  font-size: clamp(25px, 5vw, 50px);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.animal-info-text {
+  color: #fff;
+  font-family: Nunito, sans-serif;
+  font-size: clamp(18px, 5vw, 36px);
+  font-weight: 600;
+  text-align: justify;
+}
+
+.btn {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: rgba(112, 192, 91, 0.54) !important;
+    color: $secondary !important;
+  }
+
+  &:active {
+    background: $secondary !important;
+    color: #fff !important;
+  }
+
+  &:disabled {
+    color: #979797 !important;
+    background: #e0e0e0 !important;
+    pointer-events: none;
+  }
+}
