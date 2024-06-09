@@ -4,9 +4,9 @@ import CrossIcon from "@/components/ui/icons/CrossIcon.vue";
 import { useAuthStore } from "@/stores/auth.store.ts";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-import { useField, useForm } from "vee-validate";
+import { useField, useForm, FormState, GenericObject } from "vee-validate";
 
-const isLogin = ref(false);
+const isLogin = ref(true);
 const error = ref("");
 
 const registerValidationSchema = toTypedSchema(
@@ -20,7 +20,7 @@ const registerValidationSchema = toTypedSchema(
         .string({ required_error: "Пароль обязателен" })
         .min(8, "Пароль должен быть минимум 8 символов"),
       secondPassword: z
-        .string({ required_error: "Пароль обязателен" })
+        .string({ required_error: "Повторите пароль" })
         .min(8, "Пароль должен быть минимум 8 символов"),
     })
     .refine((data) => data.password === data.secondPassword, {
@@ -49,16 +49,12 @@ const toggleForm = () => {
   isLogin.value = !isLogin.value;
 };
 
-const { handleSubmit, errors, isSubmitting, resetForm, setFieldValue } =
-  useForm({
-    validationSchema: loginValidationSchema,
-  });
+const formSchema = ref<any>(
+  isLogin.value ? loginValidationSchema : registerValidationSchema
+);
 
-watch(isLogin, (newValue) => {
-  const newSchema = newValue ? loginValidationSchema : registerValidationSchema;
-
-  error.value = "";
-  resetForm({ values: {}, schema: newSchema });
+const { handleSubmit, errors, isSubmitting, resetForm } = useForm({
+  validationSchema: formSchema,
 });
 
 const { value: login } = useField("login");
@@ -72,16 +68,25 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     if (isLogin.value) {
       await authStore.login(login, password);
-      closeModal();
     } else {
       await authStore.register(login, password);
-
-      closeModal();
     }
+    closeModal();
   } catch (err: any) {
     console.log(err);
     error.value = err.message || err;
   }
+});
+
+watch(isLogin, (newValue) => {
+  error.value = "";
+  formSchema.value = newValue
+    ? loginValidationSchema
+    : registerValidationSchema;
+  resetForm({
+    values: {},
+    schema: formSchema.value,
+  } as Partial<FormState<GenericObject>>);
 });
 </script>
 
@@ -171,7 +176,7 @@ const onSubmit = handleSubmit(async (values) => {
 .modal-content {
   padding: 50px 80px;
   border-radius: 4px;
-  box-shadow: 8px 16px 32px 0px rgba(255, 102, 51, 0.2);
+  box-shadow: 8px 16px 32px 0 rgba(255, 102, 51, 0.2);
   background: #fff;
 }
 

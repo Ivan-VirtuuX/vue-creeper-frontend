@@ -1,1 +1,6 @@
-export const baseUrl = "http://localhost:7777";
+enum apiUrls {
+  production = "https://vue-creeper-backend.onrender.com",
+  development = "http://localhost:7777",
+}
+
+export const baseUrl = apiUrls[process.env.NODE_ENV as keyof typeof apiUrls];

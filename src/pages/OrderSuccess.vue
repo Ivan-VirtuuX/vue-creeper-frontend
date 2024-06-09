@@ -11,9 +11,9 @@ const order = cartStore.order;
 const route = useRoute();
 const orderId = route.params.id as string;
 
-// onMounted(() => {
-//   if (order?.items === undefined) router.push("/profile");
-// });
+onMounted(() => {
+  if (order?.items === undefined) router.push("/profile");
+});
 </script>
 
 <template>

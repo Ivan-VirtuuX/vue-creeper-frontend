@@ -51,7 +51,7 @@ watch(query, async (newValue) => {
 watch(
   () => route.query.text,
   async (newValue) => {
-    query.value = newValue ? decodeURIComponent(newValue) : "";
+    query.value = newValue ? decodeURIComponent(newValue as string) : "";
   }
 );
 </script>

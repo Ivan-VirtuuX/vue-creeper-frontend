@@ -94,7 +94,7 @@ export const router = createRouter({
       component: OrderSuccess,
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_, __, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     } else {
@@ -106,7 +106,7 @@ export const router = createRouter({
 router.beforeEach(async (to) => {
   const privatePages = ["/profile", "/cart", "/favorites"];
   const authRequired = privatePages.includes(to.path);
-  const auth = useAuthStore();
+  const auth: any = useAuthStore();
 
   if (authRequired && !auth.user) {
     auth.returnUrl = to.fullPath;

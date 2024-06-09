@@ -27,7 +27,6 @@ const performSearch = () => {
 @import "@/assets/variables.scss";
 
 input {
-  width: 465px;
   font-size: 22px;
   border: 1px solid $secondary;
   color: $secondary;

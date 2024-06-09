@@ -2,7 +2,6 @@
 import { formatPrice } from "@/helpers/formatPrice.ts";
 import { onMounted, ref } from "vue";
 import { useCartStore } from "@/stores/cart.store.ts";
-import { Api } from "@/api/index.ts";
 import { router } from "@/helpers/router.ts";
 
 const cartStore = useCartStore();
