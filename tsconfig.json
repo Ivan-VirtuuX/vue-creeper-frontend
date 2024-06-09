@@ -21,6 +21,7 @@
       "@/types/*": ["./types/*"],
       "@/components/*": ["./src/components/*"],
       "@/assets/*": ["./src/assets/*"],
+      "@/public/*": ["./public/*"],
       "@/pages/*": ["./src/pages/*"],
       "@/stores/*": ["./src/stores/*"],
       "@/helpers/*": ["./src/helpers/*"],
