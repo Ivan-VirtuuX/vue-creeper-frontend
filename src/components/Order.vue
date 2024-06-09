@@ -31,11 +31,7 @@ const { id, totalPrice, discount, items } = defineProps<{
         :key="item._id"
       >
         <div>
-          <img
-            class="item-img"
-            :src="`./src/assets/img/${item.imageUrl}`"
-            alt=""
-          />
+          <img class="item-img" :src="`img/${item.imageUrl}`" alt="" />
         </div>
         <div class="flex flex-col gap-3 ml-3 pt-3 w-full pr-5">
           <p class="item-title">{{ item.title }}</p>

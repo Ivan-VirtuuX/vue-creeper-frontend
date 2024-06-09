@@ -88,7 +88,7 @@ onMounted(async () => {
 <template>
   <div class="animal-container">
     <router-link :to="`/catalog/${type}/${_id}`">
-      <img :src="`/src/assets/img/${imageUrl}`" alt="animal img" />
+      <img :src="`img/${imageUrl}`" alt="animal img" />
     </router-link>
     <div class="flex flex-col text-center pb-7 px-2">
       <p class="title">{{ title }}</p>

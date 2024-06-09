@@ -74,10 +74,7 @@ onMounted(async () => {
       <h4>{{ animal?.title }}</h4>
       <div class="content flex justify-between gap-10">
         <div class="image-container">
-          <img
-            :src="`/src/assets/img/${animal?.imageUrl}`"
-            :alt="animal?.title"
-          />
+          <img :src="`img/${animal?.imageUrl}`" :alt="animal?.title" />
         </div>
         <div
           class="price-block flex items-end justify-between w-full flex-1 flex-wrap gap-5"

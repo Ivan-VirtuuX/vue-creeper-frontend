@@ -16,7 +16,7 @@ import OrderCheckout from "@/pages/OrderCheckout.vue";
 import OrderSuccess from "@/pages/OrderSuccess.vue";
 
 export const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   linkActiveClass: "active",
   routes: [
     {
