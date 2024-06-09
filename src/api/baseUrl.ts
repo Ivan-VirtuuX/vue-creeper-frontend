@@ -3,5 +3,4 @@ enum apiUrls {
   development = "http://localhost:7777",
 }
 
-// export const baseUrl = apiUrls[process.env.NODE_ENV as keyof typeof apiUrls];
-export const baseUrl = apiUrls.production;
+export const baseUrl = apiUrls[process.env.NODE_ENV as keyof typeof apiUrls];
