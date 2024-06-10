@@ -142,7 +142,7 @@ onMounted(async () => {
                 <span class="checkmark"></span>
               </label>
               <div>
-                <img class="item-img" :src="`img/${item.imageUrl}`" alt="" />
+                <img class="item-img" :src="`/img/${item.imageUrl}`" alt="" />
               </div>
               <div class="ml-3">
                 <p class="item-title">{{ item.title }}</p>

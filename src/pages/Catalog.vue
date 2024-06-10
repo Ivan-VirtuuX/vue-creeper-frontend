@@ -13,7 +13,7 @@ import Footer from "@/components/Footer.vue";
         <arrow-right-icon />
         <span class="link active-link">Каталог</span>
       </div>
-      <h3 class="mt-20">Каталог</h3>
+      <h3 class="mt-20">Категории</h3>
       <div class="catalog flex justify-between flex-wrap">
         <router-link to="/catalog/amphibians">
           <div class="item flex flex-col items-center">
