@@ -52,13 +52,13 @@ import Footer from "@/components/Footer.vue";
         </div>
         <div class="feature-item flex flex-col gap-7 items-center">
           <div>
-            <img src="@/assets/img/features/1.png" alt="feature img" />
+            <img src="@/assets/img/features/3.png" alt="feature img" />
           </div>
           <div class="feature-item-title">ГАРАНТИЯ КАЧЕСТВА</div>
         </div>
         <div class="feature-item flex flex-col gap-7 items-center">
           <div>
-            <img src="@/assets/img/features/1.png" alt="feature img" />
+            <img src="@/assets/img/features/4.png" alt="feature img" />
           </div>
           <div class="feature-item-title">
             ПОДДЕРЖКА И КОНСУЛЬТАЦИИ ПОСЛЕ ПРОДАЖИ
@@ -66,11 +66,17 @@ import Footer from "@/components/Footer.vue";
         </div>
         <div class="feature-item flex flex-col gap-7 items-center">
           <div>
-            <img src="@/assets/img/features/1.png" alt="feature img" />
+            <img src="@/assets/img/features/5.png" alt="feature img" />
           </div>
           <div class="feature-item-title">
             ГАРАНТИЯ НА ЖИЗНЬ И ЗДОРОВЬЕ ЖИВОТНОГО
           </div>
+        </div>
+        <div class="feature-item flex flex-col gap-7 items-center">
+          <div>
+            <img src="@/assets/img/features/6.png" alt="feature img" />
+          </div>
+          <div class="feature-item-title">СЕРТИФИЦИРОВАННЫЕ<br />ТОВАРЫ</div>
         </div>
       </div>
     </div>

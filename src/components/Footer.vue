@@ -20,9 +20,9 @@
         </router-link>
         <div class="contacts flex flex-col gap-3">
           <p>Контакты</p>
-          <span>ул. Челюскинцев д. 20 к 4</span>
+          <span>УЛ ФРУНЗЕ, Д. 1, К. 4 офис 30</span>
           <span>Ежедневно С 11:00 ДО 22:00</span>
-          <span>8 960 977 39 78</span>
+          <span>8 381 229 42 88</span>
         </div>
       </div>
     </div>
