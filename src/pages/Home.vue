@@ -11,14 +11,26 @@ const chameleons = ref<IProduct[]>([]);
 const amphibians = ref<IProduct[]>([]);
 const spiders = ref<IProduct[]>([]);
 
+const form = ref({
+  name: "",
+  email: "",
+  message: "",
+});
+
 const submitted = ref(false);
 
-const submitFeedback = (event: Event) => {
+const submitFeedback = async (event: Event) => {
   event.preventDefault();
 
-  setTimeout(() => {
+  try {
+    await axios.post(`${baseUrl}/feedback`, {
+      ...form.value,
+    });
+  } catch (err) {
+    console.warn(err);
+  } finally {
     submitted.value = true;
-  }, 500);
+  }
 };
 
 onMounted(async () => {
@@ -144,19 +156,42 @@ onMounted(async () => {
       <div v-if="submitted" class="feedback-success-text">
         Спасибо за ваш отзыв!
       </div>
-      <form v-else @submit="submitFeedback" class="feedback-form" action="">
+      <form
+        v-else
+        @submit.prevent="submitFeedback"
+        class="feedback-form"
+        action=""
+      >
         <div class="flex flex-col gap-5">
           <div class="flex flex-col">
             <label for="name" class="feedback-label">Имя</label>
-            <input class="feedback-input" type="text" name="name" required />
+            <input
+              class="feedback-input"
+              v-model="form.name"
+              type="text"
+              name="name"
+              required
+            />
           </div>
           <div class="flex flex-col">
             <label for="email" class="feedback-label">Email</label>
-            <input class="feedback-input" type="email" name="email" required />
+            <input
+              class="feedback-input"
+              v-model="form.email"
+              type="email"
+              name="email"
+              required
+            />
           </div>
           <div class="flex flex-col">
             <label for="message" class="feedback-label">Сообщение</label>
-            <input class="feedback-input" type="text" name="message" required />
+            <input
+              class="feedback-input"
+              v-model="form.message"
+              type="text"
+              name="message"
+              required
+            />
           </div>
         </div>
         <div class="flex justify-center mt-8">
