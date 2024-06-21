@@ -13,8 +13,8 @@ import Footer from "@/components/Footer.vue";
         <arrow-right-icon />
         <span class="link active-link">О нас</span>
       </div>
-      <h3 class="mt-20">О нас</h3>
-      <div class="flex flex-col gap-20">
+      <h3>О нас</h3>
+      <div class="flex flex-col gap-5">
         <p>
           Любовь к животным объединила нескольких энтузиастов и вдохновила их на
           создание уникального проекта под названием Creeper. С самого начала
@@ -108,6 +108,8 @@ h3 {
   font-size: clamp(25px, 5vw, 50px);
   font-weight: 700;
   text-align: center;
+  margin-bottom: 50px;
+  margin-top: 80px;
 }
 
 p {
@@ -121,8 +123,8 @@ p {
   color: #fff;
   font-size: clamp(25px, 5vw, 50px);
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: 100px;
+  margin-bottom: 50px;
+  margin-top: 80px;
 }
 
 .features {
