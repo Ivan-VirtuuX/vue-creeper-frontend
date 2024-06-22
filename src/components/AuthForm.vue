@@ -57,6 +57,10 @@ const { handleSubmit, errors, isSubmitting, resetForm } = useForm({
   validationSchema: formSchema,
 });
 
+watch(errors, (newValue) => {
+  console.log(errors.value);
+});
+
 const { value: login } = useField("login");
 const { value: password } = useField("password");
 const { value: secondPassword } = useField("secondPassword");
@@ -80,6 +84,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 watch(isLogin, (newValue) => {
   error.value = "";
+
   formSchema.value = newValue
     ? loginValidationSchema
     : registerValidationSchema;
@@ -100,7 +105,7 @@ watch(isLogin, (newValue) => {
       <form @submit.prevent="onSubmit">
         <div class="flex flex-col gap-5">
           <div class="flex flex-col">
-            <p class="error">{{ errors.login }}</p>
+            <p v-if="errors.login" class="error">{{ errors.login }}</p>
             <label class="form-label" for="login">Логин</label>
             <input
               name="login"
@@ -112,7 +117,7 @@ watch(isLogin, (newValue) => {
             />
           </div>
           <div class="flex flex-col">
-            <p class="error">{{ errors.password }}</p>
+            <p v-if="errors.password" class="error">{{ errors.password }}</p>
             <label class="form-label" for="password">Пароль</label>
             <input
               name="password"
@@ -124,7 +129,9 @@ watch(isLogin, (newValue) => {
             />
           </div>
           <div v-if="!isLogin" class="flex flex-col">
-            <p class="error">{{ errors.secondPassword }}</p>
+            <p v-if="errors.secondPassword" class="error">
+              {{ errors.secondPassword }}
+            </p>
             <label class="form-label" for="secondPassword"
               >Повторите пароль</label
             >
@@ -137,9 +144,11 @@ watch(isLogin, (newValue) => {
               required
             />
           </div>
-          <p class="error">{{ error }}</p>
+          <p v-if="error" class="error">{{ error }}</p>
         </div>
-        <div class="flex items-center justify-between mt-6 select-none">
+        <div
+          class="form-bottom flex items-center justify-between mt-6 select-none"
+        >
           <button
             class="form-change-type-button"
             @click="toggleForm"
@@ -147,7 +156,17 @@ watch(isLogin, (newValue) => {
           >
             {{ isLogin ? "Регистрация" : "Вход" }}
           </button>
-          <button class="submit-button" type="submit" :disabled="isSubmitting">
+          <button
+            class="submit-button"
+            type="submit"
+            :disabled="
+              isSubmitting ||
+              !!errors.password ||
+              !!errors.login ||
+              !login ||
+              !password
+            "
+          >
             Отправить
           </button>
         </div>
@@ -178,6 +197,11 @@ watch(isLogin, (newValue) => {
   border-radius: 4px;
   box-shadow: 8px 16px 32px 0 rgba(255, 102, 51, 0.2);
   background: #fff;
+
+  @media (max-width: 470px) {
+    padding: 40px;
+    width: calc(100% - 40px);
+  }
 }
 
 .close-button {
@@ -215,6 +239,10 @@ watch(isLogin, (newValue) => {
   padding: 17px 16px;
   color: $primary;
   width: 260px;
+
+  @media (max-width: 470px) {
+    width: 100%;
+  }
 }
 
 .form-change-type-button {
@@ -238,11 +266,23 @@ watch(isLogin, (newValue) => {
     background: $lightGray;
     color: $gray;
   }
+
+  @media (max-width: 370px) {
+    width: 100%;
+  }
 }
 
 .error {
   color: $orange;
   font-size: 12px;
   margin-bottom: 10px;
+}
+
+.form-bottom {
+  @media (max-width: 370px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 }
 </style>
