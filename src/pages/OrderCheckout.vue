@@ -9,6 +9,8 @@ const cartStore = useCartStore();
 const fullName = ref("");
 const phone = ref("");
 const address = ref("");
+const confirmedPrivacyPolicy = ref("");
+const deliveryMethod = ref("");
 
 const order = cartStore.order;
 
@@ -19,11 +21,50 @@ const submitOrder = async () => {
       fullName: fullName.value,
       phone: phone.value,
       address: address.value,
+      deliveryMethod: deliveryMethod.value,
     });
     await router.push(`/order-success/${createdOrder._id}`);
   } catch (err) {
     console.error(err);
   }
+};
+
+const applyNameMask = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  let value = input.value;
+
+  value = value.replace(/[^А-Яа-яЁё\s]/g, "");
+
+  const words = value.split(/\s+/).slice(0, 3);
+  fullName.value = words.join(" ");
+};
+
+const applyPhoneMask = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  let value = input.value.replace(/\D/g, "");
+
+  if (value.startsWith("7")) value = value.slice(1);
+
+  if (value === "") {
+    phone.value = "+7";
+    return;
+  }
+
+  if (value.length > 10) value = value.slice(0, 10);
+
+  const part1 = value.slice(0, 3);
+  const part2 = value.slice(3, 6);
+  const part3 = value.slice(6, 8);
+  const part4 = value.slice(8, 10);
+
+  let formatted = "+7";
+
+  if (part1) formatted += ` (${part1}`;
+  if (part2) formatted += `) ${part2}`;
+  if (part3) formatted += `-${part3}`;
+  if (part4) formatted += `-${part4}`;
+
+  phone.value = formatted;
 };
 
 onMounted(() => {
@@ -63,7 +104,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <form @submit.prevent="submitOrder">
+      <form @submit.prevent="submitOrder" class="order-form">
         <div class="flex flex-col gap-5 mb-6">
           <div class="flex flex-col">
             <label class="form-label" for="name">ФИО</label>
@@ -72,6 +113,8 @@ onMounted(() => {
               type="text"
               id="name"
               v-model="fullName"
+              @input="applyNameMask"
+              placeholder="Иванов Иван Иванович"
               required
             />
           </div>
@@ -82,6 +125,8 @@ onMounted(() => {
               type="text"
               id="phone"
               v-model="phone"
+              @input="applyPhoneMask"
+              placeholder="+7 (___) ___-__-__"
               required
             />
           </div>
@@ -94,6 +139,27 @@ onMounted(() => {
               v-model="address"
               required
             />
+          </div>
+          <div class="flex flex-col">
+            <label class="form-label" for="delivery-method"
+              >Способ доставки</label
+            >
+            <div class="select-wrapper">
+              <select id="delivery-method" v-model="deliveryMethod">
+                <option value="Курьером">Курьером</option>
+                <option value="Самовывоз">Самовывоз</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <input
+              type="checkbox"
+              id="privacyPolicy"
+              v-model="confirmedPrivacyPolicy"
+            />
+            <label for="privacyPolicy" class="privacy-policy-label">
+              Я согласен(а) на обработку персональных данных
+            </label>
           </div>
         </div>
         <div class="flex flex-col">
@@ -116,7 +182,13 @@ onMounted(() => {
         <button
           type="submit"
           class="btn confirm-btn"
-          :disabled="!fullName || !phone || !address"
+          :disabled="
+            !fullName ||
+            !phone ||
+            !address ||
+            !confirmedPrivacyPolicy ||
+            !deliveryMethod
+          "
         >
           Подтвердить заказ
         </button>
@@ -188,6 +260,10 @@ h3 {
   color: $primary;
 }
 
+.order-form {
+  width: 272px;
+}
+
 .form-label {
   color: #8f8f8f;
   font-size: 16px;
@@ -198,7 +274,11 @@ h3 {
   font-size: 16px;
   padding: 7px;
   border-radius: 4px;
-  border: 1px solid #8f8f8f;
+  border: 1px solid #bfbfbf;
+
+  &::placeholder {
+    color: #bfbfbf;
+  }
 }
 
 .cart-total-discount-title {
@@ -228,9 +308,101 @@ h3 {
 .confirm-btn {
   color: #fff;
   font-size: 24px;
-  padding: 12px 42px;
+  padding: 12px 0;
   border-radius: 4px;
   background: $secondary;
   margin-top: 25px;
+  width: 100%;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #bfbfbf;
+  border-radius: 3px;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  margin-right: 5px;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "\2714";
+  display: inline-block;
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: $secondary;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  font-weight: 700;
+}
+
+input[type="checkbox"]:checked {
+  border: 1px solid $secondary;
+
+  + .privacy-policy-label {
+    color: $secondary;
+  }
+}
+
+.privacy-policy-label {
+  font-size: 10px;
+  color: #bfbfbf;
+}
+
+.privacy-policy-label:hover {
+  text-decoration: underline;
+}
+
+#delivery-method {
+  color: $primary;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #bfbfbf;
+  width: 100%;
+  appearance: none;
+  background-color: #fff;
+  background-image: none;
+  outline: none;
+  position: relative;
+  padding: 7px 30px 7px 7px;
+}
+
+#delivery-method::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 16px;
+  color: #8f8f8f;
+  background-color: #000;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.select-wrapper::before {
+  content: "›";
+  rotate: 90deg;
+  position: absolute;
+  right: 35px;
+  bottom: -3px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 30px;
+  color: #bfbfbf;
+  z-index: 1;
 }
 </style>

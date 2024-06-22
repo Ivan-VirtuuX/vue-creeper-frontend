@@ -32,10 +32,12 @@ onMounted(async () => {
     <div class="flex flex-col gap-10 pb-10">
       <order
         v-for="order in orders"
+        :key="order._id"
         :id="order._id"
         :totalPrice="order.totalPrice"
         :discount="order.discount"
         :items="order.items"
+        :deliveryMethod="order.deliveryMethod"
       />
     </div>
   </div>

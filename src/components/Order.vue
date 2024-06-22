@@ -2,10 +2,11 @@
 import { IOrderItem } from "@/types/OrderItem.ts";
 import { formatPrice } from "@/helpers/formatPrice.ts";
 
-const { id, totalPrice, discount, items } = defineProps<{
+const { id, totalPrice, discount, deliveryMethod, items } = defineProps<{
   id: string;
   totalPrice: number;
   discount: number;
+  deliveryMethod: string;
   items: IOrderItem[];
 }>();
 </script>
@@ -13,14 +14,18 @@ const { id, totalPrice, discount, items } = defineProps<{
 <template>
   <div>
     <p class="id">Заказ №{{ id }}</p>
-    <div class="top flex justify-between mb-4">
+    <div class="top flex justify-between mb-4 gap-2">
       <div>
-        <p class="total-price-title">На общую сумму:</p>
-        <p class="total-price">{{ formatPrice(totalPrice) }}</p>
+        <p class="top-title">На общую сумму:</p>
+        <p class="top-desc">{{ formatPrice(totalPrice) }}</p>
       </div>
       <div>
-        <p class="total-price-title">Скидка:</p>
-        <p class="total-price">{{ formatPrice(discount) }}</p>
+        <p class="top-title">Способ доставки:</p>
+        <p class="top-desc">{{ deliveryMethod }}</p>
+      </div>
+      <div>
+        <p class="top-title">Скидка:</p>
+        <p class="top-desc">{{ formatPrice(discount) }}</p>
       </div>
     </div>
     <div class="flex flex-col gap-5">
@@ -67,12 +72,12 @@ const { id, totalPrice, discount, items } = defineProps<{
   }
 }
 
-.total-price-title {
+.top-title {
   color: $secondary;
   font-size: 20px;
 }
 
-.total-price {
+.top-desc {
   color: $secondary;
   font-size: 15px;
   font-weight: 700;

@@ -196,7 +196,7 @@ onMounted(async () => {
             {{ formatPrice(authStore.user?.discountBalance) }}
           </span>
         </div>
-        <div class="total-orders">
+        <div v-if="hasSelectedItems" class="total-orders">
           <div class="flex justify-between items-center">
             <span class="cart-total-quantity-title">{{
               pluralizeProductCount(cart?.length)

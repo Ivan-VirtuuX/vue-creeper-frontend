@@ -6,7 +6,7 @@ import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useField, useForm, FormState, GenericObject } from "vee-validate";
 
-const isLogin = ref(true);
+const isLogin = ref(false);
 const error = ref("");
 
 const registerValidationSchema = toTypedSchema(
@@ -73,7 +73,7 @@ const onSubmit = handleSubmit(async (values) => {
     }
     closeModal();
   } catch (err: any) {
-    console.log(err);
+    console.warn(err);
     error.value = err.message || err;
   }
 });

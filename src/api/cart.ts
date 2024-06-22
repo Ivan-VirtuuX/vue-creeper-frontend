@@ -33,6 +33,7 @@ export const CartApi = (instance: AxiosInstance) => ({
     totalPrice,
     discount,
     bonus,
+    deliveryMethod,
   }: {
     items?: ICartItem[];
     fullName: string;
@@ -41,6 +42,7 @@ export const CartApi = (instance: AxiosInstance) => ({
     totalPrice?: number;
     discount?: number;
     bonus?: number;
+    deliveryMethod?: string;
   }) {
     const { data } = await instance.post("/cart/create-order", {
       items,
@@ -50,6 +52,7 @@ export const CartApi = (instance: AxiosInstance) => ({
       totalPrice,
       discount,
       bonus,
+      deliveryMethod,
     });
     return data;
   },

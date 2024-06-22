@@ -98,6 +98,7 @@ export const useCartStore = defineStore("cart", () => {
     fullName: string;
     phone: string;
     address: string;
+    deliveryMethod: string;
   }) => {
     try {
       await authStore.updateDiscountBalance(

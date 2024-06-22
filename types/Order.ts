@@ -9,5 +9,6 @@ export interface IOrder {
   totalPrice: number;
   discount: number;
   userId: string;
+  deliveryMethod: string;
   createdAt: Date;
 }
