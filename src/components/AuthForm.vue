@@ -57,10 +57,6 @@ const { handleSubmit, errors, isSubmitting, resetForm } = useForm({
   validationSchema: formSchema,
 });
 
-watch(errors, (newValue) => {
-  console.log(errors.value);
-});
-
 const { value: login } = useField("login");
 const { value: password } = useField("password");
 const { value: secondPassword } = useField("secondPassword");
